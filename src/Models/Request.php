@@ -16,11 +16,11 @@ class Request
      */
     public function setMethod(string $method): self
     {
-        if (!in_array(strtolower($method), ['get', 'post'])) {
+        if (!in_array(strtoupper($method), ['GET', 'POST'])) {
             throw new InvalidMethodException($method);
         }
 
-        $this->method = $method;
+        $this->method = strtoupper($method);
 
         return $this;
     }
