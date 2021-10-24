@@ -10,7 +10,7 @@ class PaginatedResponse extends DataTransferObject
 
     public ?Metadata $meta;
 
-    public function hasNextPage()
+    public function hasNextPage(): bool
     {
         if (null === $this->meta) {
             return false;

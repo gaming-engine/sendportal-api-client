@@ -20,7 +20,7 @@ class Metadata extends DataTransferObject
 
     public int $total;
 
-    public function hasNextPage()
+    public function hasNextPage(): bool
     {
         return $this->current_page < $this->last_page;
     }
