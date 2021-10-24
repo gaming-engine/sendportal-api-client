@@ -11,14 +11,6 @@ class GuzzleHttpClient implements HttpClientInterface
 
     public function __construct(private Client $client)
     {
-        $this->setHeader('Content-Type', 'application/json');
-    }
-
-    function setHeader(string $key, string $value): self
-    {
-        $this->headers[$key] = $value;
-
-        return $this;
     }
 
     function getHeaders(): array
@@ -31,6 +23,13 @@ class GuzzleHttpClient implements HttpClientInterface
         foreach ($values as $key => $value) {
             $this->setHeader($key, $value);
         }
+
+        return $this;
+    }
+
+    function setHeader(string $key, string $value): self
+    {
+        $this->headers[$key] = $value;
 
         return $this;
     }
@@ -57,7 +56,8 @@ class GuzzleHttpClient implements HttpClientInterface
         );
 
         return json_decode(
-            $response->getBody()
+            $response->getBody(),
+            true
         );
     }
 
@@ -69,7 +69,7 @@ class GuzzleHttpClient implements HttpClientInterface
                 ->setUri($uri)
                 ->setData($data)
                 ->setHeaders(array_merge($this->headers, $headers))
-        );
+        )['data'];
     }
 
     function put(string $uri, array $data, array $headers = []): mixed
@@ -80,7 +80,7 @@ class GuzzleHttpClient implements HttpClientInterface
                 ->setUri($uri)
                 ->setData($data)
                 ->setHeaders(array_merge($this->headers, $headers))
-        );
+        )['data'];
     }
 
     function delete(string $uri, array $headers = []): void
