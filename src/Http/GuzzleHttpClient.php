@@ -7,7 +7,6 @@ use GuzzleHttp\Client;
 
 class GuzzleHttpClient implements HttpClientInterface
 {
-    private string $baseUri;
     private array $headers = array();
 
     public function __construct(private Client $client)
@@ -18,18 +17,6 @@ class GuzzleHttpClient implements HttpClientInterface
     function setHeader(string $key, string $value): self
     {
         $this->headers[$key] = $value;
-
-        return $this;
-    }
-
-    function getBaseUri(): ?string
-    {
-        return $this->baseUri ?? null;
-    }
-
-    function setBaseUri(string $baseUri): self
-    {
-        $this->baseUri = $baseUri;
 
         return $this;
     }
@@ -53,7 +40,7 @@ class GuzzleHttpClient implements HttpClientInterface
         return $this->fire(
             (new Request())
                 ->setMethod('GET')
-                ->setUri($this->normalizeUri($uri))
+                ->setUri($uri)
                 ->setHeaders(array_merge($this->headers, $headers))
         );
     }
@@ -74,28 +61,34 @@ class GuzzleHttpClient implements HttpClientInterface
         );
     }
 
-    private function normalizeUri(string $uri): string
-    {
-        if (!isset($this->baseUri)) {
-            return $uri;
-        }
-
-        if ($uri[0] === '/' && str_ends_with($this->baseUri, '/')) {
-            $uri = substr($uri, 0, strlen($uri) - 1);
-        } elseif (!str_ends_with($this->baseUri, '/')) {
-            $uri = "/$uri";
-        }
-
-        return $this->baseUri . $uri;
-    }
-
     function post(string $uri, array $data, array $headers = []): mixed
     {
         return $this->fire(
             (new Request())
                 ->setMethod('POST')
-                ->setUri($this->normalizeUri($uri))
+                ->setUri($uri)
                 ->setData($data)
+                ->setHeaders(array_merge($this->headers, $headers))
+        );
+    }
+
+    function put(string $uri, array $data, array $headers = []): mixed
+    {
+        return $this->fire(
+            (new Request())
+                ->setMethod('PUT')
+                ->setUri($uri)
+                ->setData($data)
+                ->setHeaders(array_merge($this->headers, $headers))
+        );
+    }
+
+    function delete(string $uri, array $headers = []): void
+    {
+        $this->fire(
+            (new Request())
+                ->setMethod('DELETE')
+                ->setUri($uri)
                 ->setHeaders(array_merge($this->headers, $headers))
         );
     }

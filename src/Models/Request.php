@@ -16,7 +16,7 @@ class Request
      */
     public function setMethod(string $method): self
     {
-        if (!in_array(strtoupper($method), ['GET', 'POST'])) {
+        if (!in_array(strtoupper($method), ['GET', 'POST', 'PUT', 'DELETE'])) {
             throw new InvalidMethodException($method);
         }
 

@@ -47,6 +47,42 @@ class RequestTest extends TestCase
     /**
      * @test
      */
+    public function request_set_method_allows_setting_as_put()
+    {
+        // Arrange
+        $subject = new Request();
+
+        // Act
+        $subject->setMethod('put');
+
+        // Assert
+        $this->assertEquals(
+            'PUT',
+            $subject->method()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function request_set_method_allows_setting_as_delete()
+    {
+        // Arrange
+        $subject = new Request();
+
+        // Act
+        $subject->setMethod('delete');
+
+        // Assert
+        $this->assertEquals(
+            'DELETE',
+            $subject->method()
+        );
+    }
+
+    /**
+     * @test
+     */
     public function request_set_method_throws_an_exception_when_other_methods_are_used()
     {
         // Arrange

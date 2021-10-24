@@ -74,108 +74,6 @@ class GuzzleHttpClientTest extends TestCase
     /**
      * @test
      */
-    public function guzzle_http_client_base_uri()
-    {
-        // Arrange
-        $subject = new GuzzleHttpClient(
-            $this->createMock(Client::class)
-        );
-
-        // Act
-        $subject->setBaseUri('foo://bar');
-
-        // Assert
-        $this->assertEquals('foo://bar', $subject->getBaseUri());
-    }
-
-    /**
-     * @test
-     */
-    public function guzzle_http_client_get_will_hit_the_provided_uri_if_no_base_uri_is_provided()
-    {
-        // Arrange
-        $subject = new GuzzleHttpClient(
-            $client = $this->createMock(Client::class)
-        );
-
-        $response = $this->createMock(ResponseInterface::class);
-
-        $client->expects($this->once())
-            ->method('request')
-            ->with(
-                'GET',
-                'foo-url',
-                $this->callback(fn($value) => is_array($value))
-            )
-            ->willReturn($response);
-
-        // Act
-        $subject->get('foo-url');
-
-        // Assert
-    }
-
-    /**
-     * @test
-     */
-    public function guzzle_http_client_get_will_add_the_base_uri_to_the_provided_uri_adding_in_a_slash()
-    {
-        // Arrange
-        $subject = new GuzzleHttpClient(
-            $client = $this->createMock(Client::class)
-        );
-
-        $response = $this->createMock(ResponseInterface::class);
-
-        $client->expects($this->once())
-            ->method('request')
-            ->with(
-                'GET',
-                'http://foo.com/url',
-                $this->callback(fn($value) => is_array($value))
-            )
-            ->willReturn($response);
-
-        // Act
-        $subject
-            ->setBaseUri('http://foo.com')
-            ->get('url');
-
-        // Assert
-    }
-
-    /**
-     * @test
-     */
-    public function guzzle_http_client_get_will_add_the_base_uri_to_the_provided_uri()
-    {
-        // Arrange
-        $subject = new GuzzleHttpClient(
-            $client = $this->createMock(Client::class)
-        );
-
-        $response = $this->createMock(ResponseInterface::class);
-
-        $client->expects($this->once())
-            ->method('request')
-            ->with(
-                'GET',
-                'http://foo.com/url',
-                $this->callback(fn($value) => is_array($value))
-            )
-            ->willReturn($response);
-
-        // Act
-        $subject
-            ->setBaseUri('http://foo.com/')
-            ->get('url');
-
-        // Assert
-    }
-
-    /**
-     * @test
-     */
     public function guzzle_http_client_get_will_retrieve_the_data()
     {
         // Arrange
@@ -267,5 +165,72 @@ class GuzzleHttpClientTest extends TestCase
 
         // Assert
         $this->assertEquals($data, $response);
+    }
+
+    /**
+     * @test
+     */
+    public function guzzle_http_client_put_will_send_the_data_through()
+    {
+        // Arrange
+        $subject = new GuzzleHttpClient(
+            $client = $this->createMock(Client::class)
+        );
+
+        $data = (object)[
+            'foo' => 'bar',
+        ];
+
+        $postedData = [
+            'test' => mt_rand(),
+        ];
+
+        $response = $this->createMock(ResponseInterface::class);
+        $response->method('getBody')
+            ->willReturn(json_encode($data));
+
+        $client->expects($this->once())
+            ->method('request')
+            ->with(
+                'PUT',
+                'url',
+                $this->callback(fn($value) => $postedData === $value['json'])
+            )
+            ->willReturn($response);
+
+        // Act
+        $response = $subject->put('url', $postedData);
+
+        // Assert
+        $this->assertEquals($data, $response);
+    }
+
+    /**
+     * @test
+     */
+    public function guzzle_http_client_delete_will_send_the_request()
+    {
+        // Arrange
+        $subject = new GuzzleHttpClient(
+            $client = $this->createMock(Client::class)
+        );
+
+        $data = (object)[
+            'foo' => 'bar',
+        ];
+
+        $response = $this->createMock(ResponseInterface::class);
+        $response->method('getBody')
+            ->willReturn(json_encode($data));
+
+        $client->expects($this->once())
+            ->method('request')
+            ->with('DELETE', 'url')
+            ->willReturn($response);
+
+        // Act
+        $subject->delete('url');
+
+        // Assert
     }
 }
