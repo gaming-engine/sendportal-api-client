@@ -3,7 +3,7 @@
 namespace GamingEngine\SendPortalAPI\Clients;
 
 use GamingEngine\SendPortalAPI\DataTransfer\TemplateDTO;
-use GamingEngine\SendPortalAPI\Models\Template;
+use GamingEngine\SendPortalAPI\Models\Template\Template;
 use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
 class TemplateClient
@@ -21,6 +21,15 @@ class TemplateClient
         return array_map(
             fn($template) => new Template($template),
             $this->client->get('templates')
+        );
+    }
+
+    public function get(int $templateId): Template
+    {
+        return new Template(
+            $this->client->get(
+                "templates/$templateId"
+            )
         );
     }
 

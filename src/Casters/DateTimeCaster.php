@@ -12,8 +12,12 @@ class DateTimeCaster implements Caster
      *
      * @return mixed
      */
-    public function cast(mixed $value): DateTime
+    public function cast(mixed $value): ?DateTime
     {
+        if (is_null($value)) {
+            return null;
+        }
+
         return new DateTime($value);
     }
 }

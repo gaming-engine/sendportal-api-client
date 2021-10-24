@@ -1,6 +1,6 @@
 <?php
 
-namespace GamingEngine\SendPortalAPI\Models;
+namespace GamingEngine\SendPortalAPI\Models\Template;
 
 use DateTime;
 use GamingEngine\SendPortalAPI\Casters\DateTimeCaster;
@@ -10,7 +10,7 @@ use Spatie\DataTransferObject\DataTransferObject;
 class Template extends DataTransferObject
 {
     public int $id;
-    
+
     public string $name;
 
     public string $content;
