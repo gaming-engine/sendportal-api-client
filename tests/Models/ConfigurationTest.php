@@ -48,26 +48,4 @@ class ConfigurationTest extends TestCase
             $response
         );
     }
-
-    /**
-     * @test
-     */
-    public function configuration_workspace()
-    {
-        // Arrange
-        $subject = new Configuration(
-            'uri',
-            'token',
-            $workspace = mt_rand()
-        );
-
-        // Act
-        $response = $subject->workspace();
-
-        // Assert
-        $this->assertEquals(
-            $workspace,
-            $response
-        );
-    }
 }

@@ -12,24 +12,6 @@ class GuzzleHttpClientTest extends TestCase
     /**
      * @test
      */
-    public function guzzle_http_client_defaults_the_content_type()
-    {
-        // Arrange
-
-        // Act
-        $subject = new GuzzleHttpClient(
-            $this->createMock(Client::class)
-        );
-
-        // Assert
-        $this->assertEquals([
-            'Content-Type' => 'application/json',
-        ], $subject->getHeaders());
-    }
-
-    /**
-     * @test
-     */
     public function guzzle_http_client_set_header_adds_a_header()
     {
         // Arrange
@@ -42,7 +24,6 @@ class GuzzleHttpClientTest extends TestCase
 
         // Assert
         $this->assertEquals([
-            'Content-Type' => 'application/json',
             'foo' => 'bar',
         ], $subject->getHeaders());
     }
@@ -66,9 +47,7 @@ class GuzzleHttpClientTest extends TestCase
         $subject->setHeaders($data);
 
         // Assert
-        $this->assertEquals(array_merge([
-            'Content-Type' => 'application/json',
-        ], $data), $subject->getHeaders());
+        $this->assertEquals($data, $subject->getHeaders());
     }
 
     /**
@@ -81,13 +60,15 @@ class GuzzleHttpClientTest extends TestCase
             $client = $this->createMock(Client::class)
         );
 
-        $data = (object)[
+        $data = [
             'foo' => 'bar',
         ];
 
         $response = $this->createMock(ResponseInterface::class);
         $response->method('getBody')
-            ->willReturn(json_encode($data));
+            ->willReturn(json_encode([
+                'data' => $data,
+            ]));
 
         $client->method('request')
             ->willReturn($response);
@@ -96,7 +77,7 @@ class GuzzleHttpClientTest extends TestCase
         $response = $subject->get('url');
 
         // Assert
-        $this->assertEquals($data, $response);
+        $this->assertEquals($data, $response['data']);
     }
 
     /**
@@ -109,13 +90,15 @@ class GuzzleHttpClientTest extends TestCase
             $client = $this->createMock(Client::class)
         );
 
-        $data = (object)[
+        $data = [
             'foo' => 'bar',
         ];
 
         $response = $this->createMock(ResponseInterface::class);
         $response->method('getBody')
-            ->willReturn(json_encode($data));
+            ->willReturn(json_encode([
+                'data' => $data,
+            ]));
 
         $client->method('request')
             ->willReturn($response);
@@ -139,7 +122,7 @@ class GuzzleHttpClientTest extends TestCase
             $client = $this->createMock(Client::class)
         );
 
-        $data = (object)[
+        $data = [
             'foo' => 'bar',
         ];
 
@@ -149,7 +132,9 @@ class GuzzleHttpClientTest extends TestCase
 
         $response = $this->createMock(ResponseInterface::class);
         $response->method('getBody')
-            ->willReturn(json_encode($data));
+            ->willReturn(json_encode([
+                'data' => $data,
+            ]));
 
         $client->expects($this->once())
             ->method('request')
@@ -177,7 +162,7 @@ class GuzzleHttpClientTest extends TestCase
             $client = $this->createMock(Client::class)
         );
 
-        $data = (object)[
+        $data = [
             'foo' => 'bar',
         ];
 
@@ -187,7 +172,9 @@ class GuzzleHttpClientTest extends TestCase
 
         $response = $this->createMock(ResponseInterface::class);
         $response->method('getBody')
-            ->willReturn(json_encode($data));
+            ->willReturn(json_encode([
+                'data' => $data,
+            ]));
 
         $client->expects($this->once())
             ->method('request')
@@ -215,13 +202,15 @@ class GuzzleHttpClientTest extends TestCase
             $client = $this->createMock(Client::class)
         );
 
-        $data = (object)[
+        $data = [
             'foo' => 'bar',
         ];
 
         $response = $this->createMock(ResponseInterface::class);
         $response->method('getBody')
-            ->willReturn(json_encode($data));
+            ->willReturn(json_encode([
+                'data' => $data,
+            ]));
 
         $client->expects($this->once())
             ->method('request')
