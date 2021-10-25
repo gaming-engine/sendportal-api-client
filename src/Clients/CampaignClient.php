@@ -4,12 +4,11 @@ namespace GamingEngine\SendPortalAPI\Clients;
 
 use GamingEngine\SendPortalAPI\DataTransfer\CampaignDTO;
 use GamingEngine\SendPortalAPI\Models\Campaign\Campaign;
-use GamingEngine\SendPortalAPI\Models\Subscriber\Subscriber;
 
 class CampaignClient extends BaseClient
 {
     /**
-     * @return Subscriber[]
+     * @return Campaign[]
      */
     public function retrieve(): array
     {
