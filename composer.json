@@ -1,43 +1,44 @@
 {
-    "name": "gaming-engine/sendportal-api-client",
-    "description": "API Client for SendPortal.IO",
-    "keywords": [
-        "email",
-        "sendportal",
-        "api"
-    ],
-    "homepage": "https://github.com/gaming-engine/sendportal-api-client",
-    "license": "MIT",
-    "type": "library",
-    "authors": [
-        {
-            "name": "Andrew Judd",
-            "email": "awjudd@gmail.com",
-            "role": "Developer"
-        }
-    ],
-    "require": {
-        "php": "^8.0|^8.1",
-        "guzzlehttp/guzzle": "^7.4"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^9.0"
-    },
-    "autoload": {
-        "psr-4": {
-            "GamingEngine\\SendPortalAPI\\": "src"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "GamingEngine\\SendPortalAPI\\Tests\\": "tests"
-        }
-    },
-    "scripts": {
-        "test": "vendor/bin/phpunit",
-        "test-coverage": "XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-html coverage"
-    },
-    "config": {
-        "sort-packages": true
+  "name": "gaming-engine/sendportal-api-client",
+  "description": "API Client for SendPortal.IO",
+  "keywords": [
+    "email",
+    "sendportal",
+    "api"
+  ],
+  "homepage": "https://github.com/gaming-engine/sendportal-api-client",
+  "license": "MIT",
+  "type": "library",
+  "authors": [
+    {
+      "name": "Andrew Judd",
+      "email": "awjudd@gmail.com",
+      "role": "Developer"
     }
+  ],
+  "require": {
+    "php": "^8.0|^8.1",
+    "guzzlehttp/guzzle": "^7.4",
+    "spatie/data-transfer-object": "^3.7"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "GamingEngine\\SendPortalAPI\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "GamingEngine\\SendPortalAPI\\Tests\\": "tests"
+    }
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit",
+    "test:coverage": "XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-html coverage"
+  },
+  "config": {
+    "sort-packages": true
+  }
 }
