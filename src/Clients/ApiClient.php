@@ -6,7 +6,7 @@ use GamingEngine\SendPortalAPI\Http\HttpClientInterface;
 use GamingEngine\SendPortalAPI\Models\Configuration;
 use GamingEngine\SendPortalAPI\Models\Http\PaginatedResponse;
 
-class Client implements ClientInterface
+class ApiClient implements ApiClientInterface
 {
     public function __construct(
         private Configuration $configuration,
@@ -16,7 +16,7 @@ class Client implements ClientInterface
 
     public function get(string $uri): mixed
     {
-        $response = new PaginatedResponse((array)$this->client->get(
+        $response = new PaginatedResponse($this->client->get(
             $this->normalizeUri($uri),
             $this->headers()
         ));
@@ -29,7 +29,10 @@ class Client implements ClientInterface
                 $this->headers()
             ));
 
-            $data += $response->data;
+            $data = [
+                ...$data,
+                ...$response->data,
+            ];
         }
 
         return $data;
@@ -37,11 +40,15 @@ class Client implements ClientInterface
 
     private function normalizeUri(string $uri): string
     {
-        $baseUri = $this->configuration->baseUri() . '/api/v1';
+        $baseUri = $this->configuration->baseUri();
 
-        if ($uri[0] === ' / ' && str_ends_with($baseUri, ' / ')) {
-            $uri = substr($uri, 0, strlen($uri) - 1);
-        } elseif (!str_ends_with($baseUri, ' / ')) {
+        if (!str_ends_with($baseUri, '/')) {
+            $baseUri .= '/';
+        }
+
+        $baseUri .= 'api/v1';
+
+        if ('/' !== $uri[0]) {
             $uri = "/$uri";
         }
 

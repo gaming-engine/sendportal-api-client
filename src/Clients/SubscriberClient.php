@@ -7,50 +7,46 @@ use GamingEngine\SendPortalAPI\Models\Subscriber\Subscriber;
 use GamingEngine\SendPortalAPI\Models\Subscriber\SubscriberDetails;
 use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
-class SubscriberClient
+class SubscriberClient extends BaseClient
 {
-    public function __construct(private ClientInterface $client)
-    {
-    }
-
     /**
      * @return Subscriber[]
      * @throws UnknownProperties
      */
     public function retrieve(): array
     {
-        return array_map(
-            fn($template) => new Subscriber($template),
-            $this->client->get('subscribers')
+        return $this->mapInto(
+            $this->client->get('subscribers'),
+            Subscriber::class
         );
     }
 
     public function get(int $subscriberId): SubscriberDetails
     {
-        return new SubscriberDetails(
-            $this->client->get(
-                "subscribers/$subscriberId"
-            )
+        return $this->mapInto(
+            $this->client->get("subscribers/$subscriberId"),
+            SubscriberDetails::class
         );
     }
 
     public function create(SubscriberDTO $subscriber): SubscriberDetails
     {
-        return new SubscriberDetails(
+        return $this->mapInto(
             $this->client->post(
                 'subscribers',
                 (array)$subscriber
-            )
+            ),
+            SubscriberDetails::class
         );
     }
 
     public function update(int $subscriberId, SubscriberDTO $subscriber): SubscriberDetails
     {
-        return new SubscriberDetails(
+        return $this->mapInto(
             $this->client->put(
                 "subscribers/$subscriberId",
                 (array)$subscriber
-            )
+            ), SubscriberDetails::class
         );
     }
 

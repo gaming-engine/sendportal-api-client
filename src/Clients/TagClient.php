@@ -6,57 +6,52 @@ use GamingEngine\SendPortalAPI\DataTransfer\TagDTO;
 use GamingEngine\SendPortalAPI\Models\Tag\Tag;
 use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
-class TagClient
+class TagClient extends BaseClient
 {
-    public function __construct(private ClientInterface $client)
-    {
-    }
-
     /**
      * @return Tag[]
      * @throws UnknownProperties
      */
     public function retrieve(): array
     {
-        return array_map(
-            fn($template) => new Tag($template),
-            $this->client->get('tags')
+        return $this->mapInto(
+            $this->client->get('tags'),
+            Tag::class
         );
     }
 
     public function get(int $tagId): Tag
     {
-        return new Tag(
-            $this->client->get(
-                "tags/$tagId"
-            )
+        return $this->mapInto(
+            $this->client->get("tags/$tagId"),
+            Tag::class
         );
     }
 
     public function create(TagDTO $tag): Tag
     {
-        return new Tag(
+        return $this->mapInto(
             $this->client->post(
                 'tags',
                 (array)$tag
-            )
+            ),
+            Tag::class
         );
     }
 
     public function update(int $tagId, TagDTO $tag): Tag
     {
-        return new Tag(
+        return $this->mapInto(
             $this->client->put(
                 "tags/$tagId",
                 (array)$tag
-            )
+            ),
+            Tag::class
         );
     }
 
     public function delete(int $tagId): void
     {
-        $this->client->delete(
-            "tags/$tagId"
-        );
+        $this->client->delete("tags/$tagId");
     }
 }

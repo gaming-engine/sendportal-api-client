@@ -2,7 +2,7 @@
 
 namespace GamingEngine\SendPortalAPI\Clients;
 
-interface ClientInterface
+interface ApiClientInterface
 {
     function get(string $uri): mixed;
 
