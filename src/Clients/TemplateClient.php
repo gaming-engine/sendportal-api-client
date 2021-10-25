@@ -4,13 +4,11 @@ namespace GamingEngine\SendPortalAPI\Clients;
 
 use GamingEngine\SendPortalAPI\DataTransfer\TemplateDTO;
 use GamingEngine\SendPortalAPI\Models\Template\Template;
-use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
 class TemplateClient extends BaseClient
 {
     /**
      * @return Template[]
-     * @throws UnknownProperties
      */
     public function retrieve(): array
     {

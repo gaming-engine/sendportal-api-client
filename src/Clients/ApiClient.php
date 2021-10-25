@@ -82,9 +82,9 @@ class ApiClient implements ApiClientInterface
         );
     }
 
-    public function delete(string $uri): void
+    public function delete(string $uri, array $data = []): mixed
     {
-        $this->client->delete(
+        return $this->client->delete(
             $this->normalizeUri($uri),
             $this->headers()
         );

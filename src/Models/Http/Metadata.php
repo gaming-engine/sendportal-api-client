@@ -8,7 +8,7 @@ class Metadata extends DataTransferObject
 {
     public int $current_page;
 
-    public int $from;
+    public ?int $from;
 
     public int $last_page;
 
@@ -16,7 +16,7 @@ class Metadata extends DataTransferObject
 
     public int $per_page;
 
-    public int $to;
+    public ?int $to;
 
     public int $total;
 

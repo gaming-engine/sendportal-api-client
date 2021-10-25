@@ -10,5 +10,5 @@ interface ApiClientInterface
 
     function put(string $uri, array $data): mixed;
 
-    function delete(string $uri): void;
+    function delete(string $uri, array $data = []): mixed;
 }

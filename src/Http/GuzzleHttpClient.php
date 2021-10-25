@@ -83,13 +83,20 @@ class GuzzleHttpClient implements HttpClientInterface
         )['data'];
     }
 
-    function delete(string $uri, array $headers = []): void
+    function delete(string $uri, array $data = [], array $headers = []): mixed
     {
-        $this->fire(
+        $response = $this->fire(
             (new Request())
                 ->setMethod('DELETE')
                 ->setUri($uri)
+                ->setData($data)
                 ->setHeaders(array_merge($this->headers, $headers))
         );
+
+        if (array_key_exists('data', $response)) {
+            $response = $response['data'];
+        }
+
+        return $response;
     }
 }

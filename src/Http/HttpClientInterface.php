@@ -14,5 +14,5 @@ interface HttpClientInterface
 
     function put(string $uri, array $data, array $headers = []): mixed;
 
-    function delete(string $uri, array $headers = []): void;
+    function delete(string $uri, array $data = [], array $headers = []): mixed;
 }

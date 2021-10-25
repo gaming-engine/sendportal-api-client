@@ -10,6 +10,10 @@ abstract class BaseClient
 
     protected function mapInto(array $data, string $targetClass): array|object
     {
+        if (empty($data)) {
+            return [];
+        }
+
         if (array_key_exists(0, $data)) {
             return array_map(
                 fn(array $values) => $this->mapInto($values, $targetClass),

@@ -5,13 +5,11 @@ namespace GamingEngine\SendPortalAPI\Clients;
 use GamingEngine\SendPortalAPI\DataTransfer\SubscriberDTO;
 use GamingEngine\SendPortalAPI\Models\Subscriber\Subscriber;
 use GamingEngine\SendPortalAPI\Models\Subscriber\SubscriberDetails;
-use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
 class SubscriberClient extends BaseClient
 {
     /**
      * @return Subscriber[]
-     * @throws UnknownProperties
      */
     public function retrieve(): array
     {

@@ -4,13 +4,11 @@ namespace GamingEngine\SendPortalAPI\Clients;
 
 use GamingEngine\SendPortalAPI\DataTransfer\TagDTO;
 use GamingEngine\SendPortalAPI\Models\Tag\Tag;
-use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 
 class TagClient extends BaseClient
 {
     /**
      * @return Tag[]
-     * @throws UnknownProperties
      */
     public function retrieve(): array
     {
