@@ -9,5 +9,5 @@ class SubscriberTagDTO extends DataTransferObject
     /**
      * @var int[]
      */
-    public array $tags;
+    public array $tags = [];
 }
