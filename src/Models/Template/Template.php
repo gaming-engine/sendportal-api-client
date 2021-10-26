@@ -19,5 +19,5 @@ class Template extends DataTransferObject
     public DateTime $created_at;
 
     #[CastWith(DateTimeCaster::class)]
-    public DateTime $updated_at;
+    public ?DateTime $updated_at;
 }

@@ -11,9 +11,9 @@ class Subscriber extends DataTransferObject
 {
     public int $id;
 
-    public string $first_name;
+    public ?string $first_name;
 
-    public string $last_name;
+    public ?string $last_name;
 
     public string $email;
 
@@ -24,5 +24,5 @@ class Subscriber extends DataTransferObject
     public DateTime $created_at;
 
     #[CastWith(DateTimeCaster::class)]
-    public DateTime $updated_at;
+    public ?DateTime $updated_at;
 }
