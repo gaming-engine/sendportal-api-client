@@ -9,5 +9,5 @@ class TagDTO extends DataTransferObject
     public string $name;
 
     /** @var int[] */
-    public array $subscribers;
+    public array $subscribers = [];
 }
